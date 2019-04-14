@@ -11,7 +11,7 @@ SUBLEVEL = 01
 
 CC := gcc
 
-CFLAGS := -Wall -O2   -o
+CFLAGS := -std=gnu99 -Wall -O2   -o
 
 
 TARGET = csh

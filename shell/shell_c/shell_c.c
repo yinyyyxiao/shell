@@ -22,7 +22,7 @@
 #include "shell_c.h"
 /////有疑问请与我联系
 
-extern int Command_Display(const char *user,const char *pwd,char*cmd);
+extern int Command_Display(const char* user,const char* pwd,char* cmd,char* computer);
 extern int export_c(char *cmd ,char *pCurrentEnv);
 
 //命令行命令最多有八个参数,先设置这麽多
@@ -52,7 +52,7 @@ static void shell_parse(char* cmd)
     }    
     for(int i =0 ;i<8;i++)
     {
-         fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
+         //fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
     }
     argv[argc] = NULL;
     argc = 0;
@@ -115,7 +115,7 @@ int main(void)
         char *home = getenv("HOME");
         char *pwd =  getenv("PWD");
         char *user = getenv("USER");
-        iRslt = Command_Display(user,pwd,cmd);
+        iRslt = Command_Display(user,pwd,cmd,computer);
         if(D_ERR == iRslt)
         {
             continue;

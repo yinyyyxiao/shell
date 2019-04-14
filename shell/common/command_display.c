@@ -17,12 +17,12 @@
 
 
 
-int Command_Display(const char *user,const char *pwd,char*cmd)
+int Command_Display(const char *user,const char* pwd,char* cmd, char* computer)
 {
         char *pfRslt = NULL;
         if(memcmp("root",user,sizeof("root")) == 0)
         {
-            fprintf(stdout,"%s@hcuuser-VirtualBox:%s$ ",user,pwd); 
+            fprintf(stdout,"%s@%s:%s$ ",user, computer, pwd); 
         }
         else
         {

@@ -39,7 +39,7 @@ static int get_equal_sign(char *env)
 int export_c(char *cmd ,char *pCurrentEnv)
 { 
     char **env = environ;   
-    fprintf(stderr,"%s %d\n",__func__,__LINE__);
+   // fprintf(stderr,"%s %d\n",__func__,__LINE__);
     if(memcmp(cmd,"export",strlen("export") + 1))
     {
         return D_ERR;
