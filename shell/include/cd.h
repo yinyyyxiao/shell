@@ -5,7 +5,7 @@
 /// @author : YYY (最終更新者)
 /// @mail   : yinyy2825@163.com
 /// @version: 1.0 新規 (更新情報（更新日、更新内容、更新案件）)
-///	@note	: Copyright (C) 2017,2018 Free Software Foundation, Inc.
+/// @note	: Copyright (C) 2017,2018 Free Software Foundation, Inc.
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef _SHELL_CD_H_
 #define _SHELL_CD_H_

@@ -8,6 +8,10 @@ command_display.o:command_display.c
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
 
 
+.PHONY:clean
+
+clean:
+	rm -rf command_display.o
 			 
 	
 

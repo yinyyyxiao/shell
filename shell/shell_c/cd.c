@@ -32,10 +32,10 @@ char* GetShortNextdir( char *pCurrentDir)
     while(index >= 0)
     {
         if(pCurrentDir[index] == '/')
-		{
-			break;
-		}
-		index--;
+        {
+            break;
+        }
+        index--;
     }
     fprintf(stdout,"index = %d\n",index); 
     while(index < len -1)
@@ -50,82 +50,82 @@ int cd_parse(char* after_cmd,char *argc,char*home)
 {
     int dirRslt = -1;
     if(memcmp(after_cmd,"cd",sizeof("cd")) == 0)
-         {
-            if(NULL == argc)
+    {
+        if(NULL == argc)
+        {
+            pCdFront = getenv("PWD");
+            dirRslt =  chdir( home);
+            if(0 > dirRslt)
             {
-                 pCdFront = getenv("PWD");
-                 dirRslt =  chdir( home);
-                if(0 > dirRslt)
-                {
-                    fprintf(stderr,"chdir : %s\n",strerror(errno)); 
-                }
-                 setenv("PWD",home,1);
-                 setenv("OLDPWD",pCdFront,1);
-                 CdFrontflag = 0;
-                 return D_OK;
+                fprintf(stderr,"chdir : %s\n",strerror(errno)); 
             }
-            else if(memcmp(argc,"-",sizeof("-")) == 0)
+            setenv("PWD",home,1);
+            setenv("OLDPWD",pCdFront,1);
+            CdFrontflag = 0;
+            return D_OK;
+        }
+        else if(memcmp(argc,"-",sizeof("-")) == 0)
+        {
+            if(CdFrontflag == -1)
             {
-                if(CdFrontflag == -1)
-                 {
-                     fprintf(stdout,"%s\n","-csh: cd: OLDPWD not set"); 
-                 }
-                 else
-                 {
-                    char*pwdbuf = getcwd(NULL,0);
-                    if(NULL == pwdbuf)
-                    {
-                        fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno)); 
-                    }
-                   // fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbuf); 
-                     setenv("OLDPWD",pwdbuf,1);
-                    if(NULL != pwdbuf)
-                    {
-                        free(pwdbuf);
-                        pwdbuf = NULL;
-                    }
-                     dirRslt =  chdir( pCdFront);
-                     if(0 > dirRslt)
-                     {
-                         fprintf(stderr,"chdir : %s\n",strerror(errno)); 
-                     }
-                     char *pwdbufbakup = getcwd(NULL,0);
-                     if(NULL == pwdbufbakup)
-                     {
-                          fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno));
-                     }
-                     //fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbufbakup); 
-                     setenv("PWD",pwdbufbakup,1);
-                    if(NULL != pwdbufbakup)
-                    {
-                        free(pwdbufbakup);
-                        pwdbufbakup = NULL;
-                    }
-                 }
-            } 
+                fprintf(stdout,"%s\n","-csh: cd: OLDPWD not set"); 
+            }
             else
             {
-                CdFrontflag = 0;
-                pCdFront = getenv("PWD");
-               if( chdir(argc) < 0 )
-               {
-                   fprintf(stderr,"csh: cd: %s: %s\n",argc,strerror(errno));
-                   return D_OK;
-               }
                 char*pwdbuf = getcwd(NULL,0);
                 if(NULL == pwdbuf)
                 {
-                    fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno));
+                    fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno)); 
                 }
-                setenv("PWD",pwdbuf,1);
-                setenv("OLDPWD",pCdFront,1);
+                // fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbuf); 
+                setenv("OLDPWD",pwdbuf,1);
                 if(NULL != pwdbuf)
                 {
                     free(pwdbuf);
                     pwdbuf = NULL;
                 }
+                dirRslt =  chdir( pCdFront);
+                if(0 > dirRslt)
+                {
+                    fprintf(stderr,"chdir : %s\n",strerror(errno)); 
+                }
+                char *pwdbufbakup = getcwd(NULL,0);
+                if(NULL == pwdbufbakup)
+                {
+                    fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno));
+                }
+                //fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbufbakup); 
+                setenv("PWD",pwdbufbakup,1);
+                if(NULL != pwdbufbakup)
+                {
+                    free(pwdbufbakup);
+                    pwdbufbakup = NULL;
+                }
             }
-            return D_OK;
-         }
-         return D_ERR;
+        } 
+        else
+        {
+            CdFrontflag = 0;
+            pCdFront = getenv("PWD");
+            if( chdir(argc) < 0 )
+            {
+                fprintf(stderr,"csh: cd: %s: %s\n",argc,strerror(errno));
+                return D_OK;
+            }
+            char*pwdbuf = getcwd(NULL,0);
+            if(NULL == pwdbuf)
+            {
+                fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno));
+            }
+            setenv("PWD",pwdbuf,1);
+            setenv("OLDPWD",pCdFront,1);
+            if(NULL != pwdbuf)
+            {
+                free(pwdbuf);
+                pwdbuf = NULL;
+            }
+        }
+        return D_OK;
+    }
+    return D_ERR;
 }

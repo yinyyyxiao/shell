@@ -52,7 +52,7 @@ static void shell_parse(char* cmd)
     }    
     for(int i =0 ;i<8;i++)
     {
-         //fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
+        //fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
     }
     argv[argc] = NULL;
     argc = 0;
@@ -64,26 +64,26 @@ static void shell_execute()
 
     switch(pid)
     {
-    //子进程创建失败
-    case -1:
-        perror("fork error");
-        exit(EXIT_FAILURE);
-        break;
-    //子进程替换,fork()给子进程返回0
-    case 0:
-        
-         //数组形式参数，自动检索环境变量
-         execvp(argv[0], argv);
-         //进程替换成功不返回，直接从替换进程处结束，如果运行到这里，说明进程替换失败，打印提示信息
-         fprintf(stderr,"%s: %s\n",argv[0],"command not found"); 
-         exit(EXIT_FAILURE);
-    //父进程
-    default:
-        {
-            int st;
-            //阻塞等待子进程
-            while(wait(&st) != pid);
-        }
+        //子进程创建失败
+        case -1:
+            perror("fork error");
+            exit(EXIT_FAILURE);
+            break;
+            //子进程替换,fork()给子进程返回0
+        case 0:
+
+            //数组形式参数，自动检索环境变量
+            execvp(argv[0], argv);
+            //进程替换成功不返回，直接从替换进程处结束，如果运行到这里，说明进程替换失败，打印提示信息
+            fprintf(stderr,"%s: %s\n",argv[0],"command not found"); 
+            exit(EXIT_FAILURE);
+            //父进程
+        default:
+            {
+                int st;
+                //阻塞等待子进程
+                while(wait(&st) != pid);
+            }
     }
 }
 
@@ -91,12 +91,12 @@ int main(void)
 {
     int iRslt = D_ERR;
     char cmd[1024] = {0};
-// -r  4.13.0-36-generic
-// -s  Linux
-// -n  ivilinux-VirtualBox
-// -m  x86_64
-// -v  #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018
-// -o  GNU/Linux
+    // -r  4.13.0-36-generic
+    // -s  Linux
+    // -n  ivilinux-VirtualBox
+    // -m  x86_64
+    // -v  #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018
+    // -o  GNU/Linux
     char computer[256] = {0};
     struct utsname  usname;
     gethostname(computer,256);
@@ -122,7 +122,7 @@ int main(void)
         }
         else if(D_EXIT == iRslt)
         {
-             return D_SHELL_OK;
+            return D_SHELL_OK;
         }
         shell_parse(cmd);
         iRslt = export_c(argv[0] ,argv[1]);
@@ -139,15 +139,15 @@ int main(void)
     }
     return D_SHELL_OK;
 }
-  
-   
-    
 
 
 
 
 
-   
+
+
+
+
 
 
 
