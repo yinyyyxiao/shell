@@ -9,9 +9,6 @@ cd.o:cd.c
 shell.o:shell.c
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
 
-
-
-			 
 	
 
 

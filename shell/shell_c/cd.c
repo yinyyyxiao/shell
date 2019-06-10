@@ -105,9 +105,29 @@ int cd_parse(char* after_cmd,char *argc,char*home)
         } 
         else
         {
+            int isHome = 0; 
+            char* home = getenv("HOME");
+            int hLen = strlen(home);
+            char arg[1024] = { 0 };
+            for (int i = 0; i < strlen(argc); ++i) {
+                if(argc[i] == '~') {
+                    memcpy(&arg[i], home, hLen + 1);
+                    isHome = 1;
+                }
+                else if(isHome)
+                {
+                    arg[i + hLen - 1] = argc[i];
+                    fprintf(stderr,"arg : %s\n",arg);
+                }
+                else
+                {
+                    arg[i] = argc[i];
+                }
+            }
+            fprintf(stderr,"arg : %s\n",arg);
             CdFrontflag = 0;
             pCdFront = getenv("PWD");
-            if( chdir(argc) < 0 )
+            if( chdir(arg) < 0 )
             {
                 fprintf(stderr,"csh: cd: %s: %s\n",argc,strerror(errno));
                 return D_OK;
