@@ -94,7 +94,9 @@ int cd_parse(char* after_cmd,char *argc,char*home)
                 {
                     fprintf(stderr,"getcwd : %d:%s\n",__LINE__,strerror(errno));
                 }
-                //fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbufbakup); 
+                pCdFront = getenv("OLDPWD");
+                
+                fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbufbakup); 
                 setenv("PWD",pwdbufbakup,1);
                 if(NULL != pwdbufbakup)
                 {
