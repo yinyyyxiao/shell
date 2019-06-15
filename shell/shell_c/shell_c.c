@@ -28,7 +28,6 @@ extern int export_c(char *cmd ,char *pCurrentEnv);
 //命令行命令最多有八个参数,先设置这麽多
 static char *argv[8] = {NULL};
 static int argc = 0;
-static int cmdline = 0;
 //命令行参数处理
 static void shell_parse(char* cmd)
 {
@@ -60,7 +59,6 @@ static void shell_parse(char* cmd)
         argv[argc++] = "--color";
     }
     argv[argc] = NULL;
-    cmdline = argc;
     argc = 0;
 }
 
