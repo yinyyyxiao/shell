@@ -28,7 +28,7 @@ extern int export_c(char *cmd ,char *pCurrentEnv);
 //命令行命令最多有八个参数,先设置这麽多
 static char *argv[8] = {NULL};
 static int argc = 0;
-
+static int cmdline = 0;
 //命令行参数处理
 static void shell_parse(char* cmd)
 {
@@ -38,7 +38,9 @@ static void shell_parse(char* cmd)
 
     for(int i = 0; cmd[i]; i++)
     {
-        //将buf中第一个字符地址给 argv[argc++]，然后status置位，直到遇到空格后的下个参数，再将其字符起始地址赋给 argv[]
+        // 将buf中第一个字符地址给 argv[argc++]，
+        // 然后status置位，直到遇到空格后的下个参数，
+        // 再将其字符起始地址赋给 argv[]
         if(!isspace(cmd[i])&&status == 0)
         {
             argv[argc++] = cmd+i;
@@ -54,7 +56,11 @@ static void shell_parse(char* cmd)
     {
         //fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
     }
+    if (!memcmp(argv[0],"ls",2)) {
+        argv[argc++] = "--color";
+    }
     argv[argc] = NULL;
+    cmdline = argc;
     argc = 0;
 }
 
