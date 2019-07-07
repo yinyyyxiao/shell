@@ -96,7 +96,6 @@ int cd_parse(char* after_cmd,char *argc,char*home)
                 }
                 pCdFront = getenv("OLDPWD");
                 
-                fprintf(stderr,"getcwd : %d:%s\n",__LINE__,pwdbufbakup); 
                 setenv("PWD",pwdbufbakup,1);
                 if(NULL != pwdbufbakup)
                 {
@@ -126,7 +125,7 @@ int cd_parse(char* after_cmd,char *argc,char*home)
                     arg[i] = argc[i];
                 }
             }
-            fprintf(stderr,"arg : %s\n",arg);
+
             CdFrontflag = 0;
             pCdFront = getenv("PWD");
             if( chdir(arg) < 0 )
