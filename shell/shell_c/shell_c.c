@@ -91,6 +91,29 @@ static void shell_execute()
     }
 }
 
+void sigHandler(int no)
+{
+    char computer[256] = {0};
+    char *pwd =  getenv("PWD");
+    char *user = getenv("USER");
+    gethostname(computer,256);
+
+    if(memcmp("root",user,sizeof("root")) == 0)
+    {
+        fprintf(stderr,"\n%s@%s:%s$ ",user, computer, pwd); 
+    }
+    else
+    {
+        if(strlen(pwd) < 14)
+        {
+            fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd); 
+        }
+        else
+        {
+            fprintf(stderr,"%s@%s:~%s$ ",user,computer, pwd+14); 
+        }
+    }
+}
 int main(void)
 {
     int iRslt = D_ERR;
@@ -113,6 +136,8 @@ int main(void)
         }
         fprintf(stdout,"Welcome to Ubuntu 16.04.2 LTS (%s %s %s)\n\n",computer,usname.release,usname.machine); 
     }
+
+    signal(SIGINT, sigHandler);
     while(1)
     {
         //printf("start");
