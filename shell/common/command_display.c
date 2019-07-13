@@ -22,17 +22,17 @@ int Command_Display(const char *user,const char* pwd,char* cmd, char* computer)
     char *pfRslt = NULL;
     if(memcmp("root",user,sizeof("root")) == 0)
     {
-        fprintf(stdout,"%s@%s:%s$ ",user, computer, pwd); 
+        fprintf(stderr,"%s@%s:%s$ ",user, computer, pwd); 
     }
     else
     {
         if(strlen(pwd) < 14)
         {
-            fprintf(stdout,"%s@hcuuser-VirtualBox:~%s$ ",user,pwd); 
+            fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd); 
         }
         else
         {
-            fprintf(stdout,"%s@hcuuser-VirtualBox:~%s$ ",user,pwd+14); 
+            fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd+14); 
         }
     }
     pfRslt = fgets(cmd,1024,stdin);
