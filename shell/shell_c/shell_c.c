@@ -22,19 +22,26 @@
 #include "shell_c.h"
 /////有疑问请与我联系
 
-extern int Command_Display(const char* user,const char* pwd,char* cmd,char* computer);
+char* cmd = NULL;
+struct CommandInfo;
+extern int Command_Display(const char* user,const char* pwd,char* computer);
 extern int export_c(char *cmd ,char *pCurrentEnv);
-
+extern void destoryTable();
+extern void initialize_readline();
+extern void getPathFile();
+struct CommandInfo* head = NULL;
 //命令行命令最多有八个参数,先设置这麽多
 static char *argv[8] = {NULL};
 static int argc = 0;
 //命令行参数处理
-static void shell_parse(char* cmd)
+static void shell_parse()
 {
     //status=1 标志一个参数字符串还没有结束 
     //status-0 标志当前命令行字符为空格
+    if(cmd == NULL){
+        return;   
+    }
     int status = 0;
-
     for(int i = 0; cmd[i]; i++)
     {
         // 将buf中第一个字符地址给 argv[argc++]，
@@ -53,7 +60,7 @@ static void shell_parse(char* cmd)
     }    
     for(int i =0 ;i<8;i++)
     {
-        //fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
+     //   fprintf(stdout,"argv[%d] = %s\n",i,argv[i]); 
     }
     if (!memcmp(argv[0],"ls",2)) {
         argv[argc++] = "--color";
@@ -114,10 +121,18 @@ void sigHandler(int no)
         }
     }
 }
+
+void free_cmd(char* cmd)
+{
+    if(cmd != NULL) {
+     //   fprintf("file : %s, line: %s",__FILE__,__LINE__);
+        free(cmd);
+        cmd = NULL;
+    }
+}
 int main(void)
 {
     int iRslt = D_ERR;
-    char cmd[1024] = {0};
     // -r  4.13.0-36-generic
     // -s  Linux
     // -n  ivilinux-VirtualBox
@@ -136,7 +151,9 @@ int main(void)
         }
         fprintf(stdout,"Welcome to Ubuntu 16.04.2 LTS (%s %s %s)\n\n",computer,usname.release,usname.machine); 
     }
-
+    getPathFile();
+    initialize_readline();
+    
     signal(SIGINT, sigHandler);
     while(1)
     {
@@ -144,19 +161,26 @@ int main(void)
         char *home = getenv("HOME");
         char *pwd =  getenv("PWD");
         char *user = getenv("USER");
-        iRslt = Command_Display(user,pwd,cmd,computer);
+        iRslt = Command_Display(user,pwd,computer);
+        if(cmd == NULL) {
+            fprintf(stderr,"cmd is NULL\n");
+        }
         if(D_ERR == iRslt)
-        {
+        {   
             continue;
         }
         else if(D_EXIT == iRslt)
         {
+            free_cmd(cmd);
             break;
         }
-        shell_parse(cmd);
+        shell_parse();
         iRslt = export_c(argv[0] ,argv[1]);
         if(D_OK == iRslt)
         {
+       //     fprintf("file : %s, line: %s",__FILE__,__LINE__);
+            free_cmd(cmd);
+         //   fprintf("file : %s, line: %s",__FILE__,__LINE__);
             continue;
         } 
         iRslt = cd_parse(argv[0],argv[1],home);
@@ -166,6 +190,8 @@ int main(void)
         } 
         shell_execute();
     }
+
+    destoryTable();
     return D_SHELL_OK;
 }
 

@@ -13,6 +13,7 @@ CC := gcc
 
 CFLAGS := -std=gnu99 -Wall -O2   -o
 
+LD := -lreadline
 
 TARGET = csh
 
@@ -26,7 +27,7 @@ OBJS  := $(patsubst %.c,%.o,$(SHELLS))
 
 
 $(TARGET):$(OBJS)
-	$(CC) $(CFLAGS) $@  $^ 
+	$(CC) $(CFLAGS) $@  $^ $(LD)
 shell_c/%.o:shell_c/%.c	
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
 common/%.o:common/%.c	

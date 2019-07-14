@@ -36,6 +36,10 @@
 
 
 
+struct CommandInfo{
+    char cmd[1024];
+    struct CommandInfo * pNext;
+};
 
 
 #endif //_SHELL_COMMON_H_

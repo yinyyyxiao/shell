@@ -13,16 +13,22 @@
 ///						 INCLUDE											 ///
 ////////////////////////////////////////////////////////////////////////////////
 #include "shell_common.h"
+#include "s_readline.h"
 
 
+extern char* cmd;
 
-
-int Command_Display(const char *user,const char* pwd,char* cmd, char* computer)
+int Command_Display(const char *user,const char* pwd, char* computer)
 {
-    char *pfRslt = NULL;
+    char cmdline[1024] = {0};
     if(memcmp("root",user,sizeof("root")) == 0)
     {
-        fprintf(stderr,"%s@%s:%s$ ",user, computer, pwd); 
+        strcat(cmdline, user);
+        strcat(cmdline, "@");
+        strcat(cmdline, computer);
+        strcat(cmdline, ":");
+        strcat(cmdline, pwd); 
+        strcat(cmdline, "$ ");
     }
     else
     {
@@ -35,16 +41,24 @@ int Command_Display(const char *user,const char* pwd,char* cmd, char* computer)
             fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd+14); 
         }
     }
-    pfRslt = fgets(cmd,1024,stdin);
-    if(NULL == pfRslt)
+    
+    if(cmd != NULL) {
+        free(cmd);
+        cmd = NULL;
+    }
+
+    cmd = readline(cmdline);
+    if (cmd == NULL) {
+        
+        fprintf(stdout,"cmd is null\n");
+        return D_ERR;
+    }
+    add_history(cmd);
+    if(memcmp("",cmd,sizeof("")) == 0)
     {
         return D_ERR;
     }
-    if(memcmp("\n",cmd,sizeof("\n")) == 0)
-    {
-        return D_ERR;
-    }
-    else if(memcmp("exit\n",cmd,sizeof("exit\n")) == 0)
+    else if(memcmp("exit",cmd,sizeof("exit")) == 0)
     {
         fprintf(stdout,"exit\n");
         return D_EXIT;
