@@ -17,7 +17,7 @@
 
 
 
-int cd_parse(char* after_cmd,char *argc,char*home);
+int cd_parse(char* after_cmd, char *argc, const char*home);
 
 
 

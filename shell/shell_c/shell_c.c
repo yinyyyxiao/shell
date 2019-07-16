@@ -158,9 +158,9 @@ int main(void)
     while(1)
     {
         //printf("start");
-        char *home = getenv("HOME");
-        char *pwd =  getenv("PWD");
-        char *user = getenv("USER");
+        const char *home = getenv("HOME");
+        const char *pwd =  getenv("PWD");
+        const char *user = getenv("USER");
         iRslt = Command_Display(user,pwd,computer);
         if(cmd == NULL) {
             fprintf(stderr,"cmd is NULL\n");

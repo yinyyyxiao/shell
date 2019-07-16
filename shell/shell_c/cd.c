@@ -46,7 +46,7 @@ char* GetShortNextdir( char *pCurrentDir)
     return TmpDir;
 }
 
-int cd_parse(char* after_cmd,char *argc,char*home)
+int cd_parse(char* after_cmd,char *argc, const char*home)
 {
     int dirRslt = -1;
     if(memcmp(after_cmd,"cd",sizeof("cd")) == 0)
