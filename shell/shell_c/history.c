@@ -86,7 +86,6 @@ void getHistoryList()
         pTmp->pNext = pNode;
         memset(str,0,MAX_LINE);
     }
-    printf("lllll: %d", fromFileCmd);
     fclose(fp);
 }
 
@@ -106,7 +105,6 @@ static void  writeHistoryFile()
         pTmp = pTmp->pNext;
         ++i;
         if(i > fromFileCmd) {
-            fprintf(stderr,"%s\n",pTmp->data);
             fprintf(fp,"%s\n",pTmp->data);
             fflush(fp);
         }
@@ -121,7 +119,6 @@ void addHistory(const char* cmd)
         (memcmp(cmd, "\n", sizeof("\n")) == 0)) {
         return;
     }
-    printf("%s",cmd);
     HistoryStore* pNode = (HistoryStore*)malloc(sizeof(HistoryStore));
     pNode->data = (char*)malloc(strlen(cmd));
     pNode->pNext = NULL;
