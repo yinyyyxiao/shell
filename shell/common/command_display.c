@@ -14,8 +14,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "shell_common.h"
 #include "s_readline.h"
-
-
+#include "history.h"
 extern char* cmd;
 
 int Command_Display(const char *user,const char* pwd, char* computer)
@@ -53,6 +52,7 @@ int Command_Display(const char *user,const char* pwd, char* computer)
         fprintf(stdout,"cmd is null\n");
         return D_ERR;
     }
+    addHistory(cmd);   
     add_history(cmd);
     if(memcmp("",cmd,sizeof("")) == 0)
     {
