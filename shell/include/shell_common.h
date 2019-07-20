@@ -42,4 +42,10 @@ struct CommandInfo{
 };
 
 
+typedef  struct HistoryStore {
+    char* data;
+    struct HistoryStore* pNext;
+} HistoryStore;
+
+
 #endif //_SHELL_COMMON_H_

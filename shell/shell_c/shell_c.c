@@ -20,6 +20,7 @@
 ///						 INCLUDE											 ///
 ////////////////////////////////////////////////////////////////////////////////
 #include "shell_c.h"
+#include "history.h"
 /////有疑问请与我联系
 
 char* cmd = NULL;
@@ -29,6 +30,7 @@ extern int export_c(char *cmd ,char *pCurrentEnv);
 extern void destoryTable();
 extern void initialize_readline();
 extern void getPathFile();
+//extern HistoryStore* history;
 struct CommandInfo* head = NULL;
 //命令行命令最多有八个参数,先设置这麽多
 static char *argv[8] = {NULL};
@@ -65,6 +67,7 @@ static void shell_parse()
     if (!memcmp(argv[0],"ls",2)) {
         argv[argc++] = "--color";
     }
+    
     argv[argc] = NULL;
     argc = 0;
 }
@@ -151,9 +154,10 @@ int main(void)
         }
         fprintf(stdout,"Welcome to Ubuntu 16.04.2 LTS (%s %s %s)\n\n",computer,usname.release,usname.machine); 
     }
+    getHistoryList();
     getPathFile();
     initialize_readline();
-    
+    historyInit();
     signal(SIGINT, sigHandler);
     while(1)
     {
@@ -192,6 +196,7 @@ int main(void)
     }
 
     destoryTable();
+    destoryHistory();
     return D_SHELL_OK;
 }
 
