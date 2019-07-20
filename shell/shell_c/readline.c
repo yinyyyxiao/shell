@@ -39,7 +39,7 @@ command_generator (text, state)
     const char *text;
     int state;
 {
-    int len = 0;
+    static int len = 0;
     /* If this is a new word to complete, initialize now.  This includes
        saving the length of TEXT for efficiency, and initializing the index
        variable to 0. */
@@ -49,10 +49,13 @@ command_generator (text, state)
     }
     while(pTmp->pNext != NULL) {
         pTmp = pTmp->pNext;
-        if (memcmp(pTmp->cmd, text, len) == 0) {
+        if (strncmp(pTmp->cmd, text,len ) == 0) {
             return (dupstr(pTmp->cmd));
         }
         pTmp = pTmp->pNext;
+    }
+    if (pTmp->pNext == NULL) {
+        pTmp = head;
     }
     /* If no names matched, then return NULL. */
     return ((char *)NULL);
