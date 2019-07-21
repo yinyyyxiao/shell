@@ -47,12 +47,12 @@ command_generator (text, state)
     {
         len = strlen (text);
     }
+
     while(pTmp->pNext != NULL) {
         pTmp = pTmp->pNext;
         if (strncmp(pTmp->cmd, text,len ) == 0) {
             return (dupstr(pTmp->cmd));
         }
-        pTmp = pTmp->pNext;
     }
     if (pTmp->pNext == NULL) {
         pTmp = head;
