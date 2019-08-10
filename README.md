@@ -14,6 +14,6 @@ the problems which may result by upgrading your shell.
 The shell of C language is a Free Software, and the basic features
 have been implemented.
 
-Please compile with Makfile.
-Compilation method：
+Please compile with Makfile.\n
+Compilation method：\n
     Please make a path in MakeFile.
