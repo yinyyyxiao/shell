@@ -27,12 +27,12 @@ OBJS  := $(patsubst %.c,%.o,$(SHELLS))
 
 
 $(TARGET):$(OBJS)
+	@echo "link  execute file csh ..."
 	$(CC) $(CFLAGS) $@  $^ $(LD)
 shell_c/%.o:shell_c/%.c	
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
 common/%.o:common/%.c	
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
-
 .PHONY:clean
 clean:
 	rm -rf $(OBJS) $(TARGET)

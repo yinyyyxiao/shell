@@ -2,4 +2,5 @@ csh
 
 *.o
 
-
+shell/build
+product
