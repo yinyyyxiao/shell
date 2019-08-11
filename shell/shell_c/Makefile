@@ -4,9 +4,7 @@
 # This is  Makefile of c shell.
 #
 #
-cd.o:cd.c
-	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
-shell.o:shell.c
+%.o:%.c
 	$(CC) $(CFLAGS) $@ -c $^ $(INCLUDE)
 
 	
