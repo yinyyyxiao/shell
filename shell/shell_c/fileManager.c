@@ -10,7 +10,6 @@ extern struct CommandInfo* CreateTable();
 extern int add_cmdInfo(char* cmd);
 
 
-
 void getPathFile()
 {
     if (head == NULL) {
@@ -21,21 +20,21 @@ void getPathFile()
         struct dirent *dp;
         int pos = 0;
         char subpath[1024] = {0};
-        char* path = getenv("PATH");
+        char *path = getenv("PATH");
         size_t len = strlen(path);
-        for(int i = 0; i < len + 1; ++i) {
+        for (int i = 0; i < len + 1; ++i) {
             if ((path[i] == ':') || (i == len)) {
                 memcpy(subpath, &path[pos], i - pos);
                 pos = i + 1;
 
                 dir = opendir(subpath);
-                if(dir == NULL) {
+                if (dir == NULL) {
                     return;
                 }
                 while ((dp = readdir(dir)) != NULL) {
                     add_cmdInfo(dp->d_name);
                 }
-                memset(subpath,0,1024);
+                memset(subpath, 0, 1024);
                 closedir(dir);
             }
         }

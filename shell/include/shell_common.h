@@ -30,21 +30,19 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <dirent.h>
-#include <ctype.h> 
+#include <ctype.h>
 #include <sys/utsname.h>
 
 
-
-
-struct CommandInfo{
+struct CommandInfo {
     char cmd[1024];
-    struct CommandInfo * pNext;
+    struct CommandInfo *pNext;
 };
 
 
-typedef  struct HistoryStore {
-    char* data;
-    struct HistoryStore* pNext;
+typedef struct HistoryStore {
+    char *data;
+    struct HistoryStore *pNext;
 } HistoryStore;
 
 
