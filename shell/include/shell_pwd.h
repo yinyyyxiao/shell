@@ -17,16 +17,9 @@
 
 ino_t get_inode(char *dirname);
 
-void inode_to_dirname(ino_t inode_num, char *pWorkPath,int iPathlen);
+void inode_to_dirname(ino_t inode_num, char *pWorkPath, int iPathlen);
 
 void get_work_dir(ino_t inode_num);
-
-
-
-
-
-
-
 
 
 #endif //_SHELL_PWD_H_

@@ -16,11 +16,7 @@
 #include "shell_common.h"
 
 
-
-int cd_parse(char* after_cmd, char *argc, const char*home);
-
-
-
+int cd_parse(char *after_cmd, char *argc, const char *home);
 
 
 #endif //_SHELL_CD_H_

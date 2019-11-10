@@ -15,56 +15,46 @@
 #include "shell_common.h"
 #include "s_readline.h"
 #include "history.h"
-extern char* cmd;
 
-int Command_Display(const char *user,const char* pwd, char* computer)
+extern char *cmd;
+
+int Command_Display(const char *user, const char *pwd, char *computer)
 {
     char cmdline[1024] = {0};
-    if(memcmp("root",user,sizeof("root")) == 0)
-    {
+    if (memcmp("root", user, sizeof("root")) == 0) {
         strcat(cmdline, user);
         strcat(cmdline, "@");
         strcat(cmdline, computer);
         strcat(cmdline, ":");
-        strcat(cmdline, pwd); 
+        strcat(cmdline, pwd);
         strcat(cmdline, "$ ");
-    }
-    else
-    {
-        if(strlen(pwd) < 14)
-        {
-            fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd); 
-        }
-        else
-        {
-            fprintf(stderr,"%s@%s:~%s$ ",user, computer, pwd+14); 
+    } else {
+        if (strlen(pwd) < 14) {
+            fprintf(stderr, "%s@%s:~%s$ ", user, computer, pwd);
+        } else {
+            fprintf(stderr, "%s@%s:~%s$ ", user, computer, pwd + 14);
         }
     }
-    
-    if(cmd != NULL) {
+
+    if (cmd != NULL) {
         free(cmd);
         cmd = NULL;
     }
 
     cmd = readline(cmdline);
     if (cmd == NULL) {
-        
-        fprintf(stdout,"cmd is null\n");
+
+        fprintf(stdout, "cmd is null\n");
         return D_ERR;
     }
-    addHistory(cmd);   
+    addHistory(cmd);
     add_history(cmd);
-    if(memcmp("",cmd,sizeof("")) == 0)
-    {
+    if (memcmp("", cmd, sizeof("")) == 0) {
         return D_ERR;
-    }
-    else if(memcmp("exit",cmd,sizeof("exit")) == 0)
-    {
-        fprintf(stdout,"exit\n");
+    } else if (memcmp("exit", cmd, sizeof("exit")) == 0) {
+        fprintf(stdout, "exit\n");
         return D_EXIT;
-    }
-    else
-    {
+    } else {
         //
     }
     return D_OK;
